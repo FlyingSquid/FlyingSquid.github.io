@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Fingerprinting: Technical Approach</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="title">Fingerprinting</a>
+				<nav>
+					<ul>
+						<li><a href="index.html#two">Home</a></li>
+						<li><a href="TechnicalApproach.html" class="active">Technical Approach</a></li>
+						<li><a href="FingerprintingStatistics.html">Fingerprinting Statistics</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<section id="main" class="wrapper">
+						<div class="inner">
+							<h1 class="major">Fingerprinting: Technical Approach</h1>
+							
+							<p>Flying Squid's Rabin Fingerprinting library provides a clean file transfer abstraction to the user, hiding the intricacies of a partial file transfer abstraction.</p>
+							<ul>
+								<li>Server-side files are split into blocks of maximum size 1 KB using a djb-2 based uniform random function of the form f: byte * byte x byte --> {0, 1, ..., 1023}. Block boundaries are determined when f returns 0.</li>
+								<li> hese blocks are treated as first-class objects and are locally cached. A custom protocol based on the Value Based Web Caching paper is then implemented to transfer files based on deltas in the blocks. Any changed block is transmitted in its entirety, while only the digests of old blocks are transmitted. Blocks of size 0 denote EOF.</li>
+								<li> The client side library receives blocks and re-assembles them into files, using the inverse of the above approach. </li>
+							</ul>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Flying Squid 2016. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
