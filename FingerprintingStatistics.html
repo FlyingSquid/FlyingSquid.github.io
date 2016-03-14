@@ -35,14 +35,44 @@
 					<section id="main" class="wrapper">
 						<div class="inner">
 							<h1 class="major">Fingerprinting Statistics</h1>
-							<p>Pairs of altered files were tested with different max block sizes.
-							<ul>
+							<p>Pairs of files were generated that differ in the following ways: </p>
+							
 								<li>Haskell: One file has an added byte.</li>
 								<li>HTML: Files differ by one large contiguous chunk.</li>
 								<li>C: Files differ by a large number of chunks distributed through the file</li>
-							</ul>
 							
+							These files were tested over the Flying Squid fingerprinting system, with different maximum block sizes. Max block sizes	
+							smaller than 256 bytes were found to cause significantly more conflicts with the internal djb2 hash.
 							</p>
+							
+							<hr>
+							
+							<span class="4u"><img src="images/HaskellGraph.png" alt="Graph" /></span>
+							<p> For files differing by one byte, a balance has to be struck between
+							several small block headers being sent and the size of the retransmitted block(s). At most one block will be retransmitted
+							due to the small difference between files. An optimal block size was found around 1000 bytes.</p>
+							
+							<hr>
+							
+							<span class="4u"><img src="images/HTMLGraph.png" alt="Graph" /></span>
+							<p> For files differing by a large contiguous chunk a minimum wasfound around 1400 bytes.</p>
+							
+							<hr>
+							
+							<span class="4u"><img src="images/CGraph.png" alt="Graph" /></span>
+							<p> For files differing by a large number of chunks distributed through the file, smaller
+							max block sizes were generally found to be better.</p>
+							
+							<hr>
+							
+							<span class="4u"><img src="images/AllGraph.png" alt="Graph" /></span>
+							<p> Taking the average of all these files, it was found that a minimal amount was resent around a maximum block size of 1KB. As a result, the
+							maximum value chosen was 1024 bytes, with an expected max size of 512 bytes.</p>
+							
+							<hr>
+							
+							<h3> Raw Data </h3>
+							
 <style type="text/css">
 	table.tableizer-table {
 		font-size: 12px;
@@ -61,17 +91,20 @@
 	}
 </style>
 <table class="tableizer-table">
-<thead><tr class="tableizer-firstrow"><th>File Pair</th><th>Number of resent blocks</th><th>Max Block size</th><th>Max expected size</th><th>Resent content</th><th>&nbsp;</th><th>Change in file size </th><th>&nbsp;</th><th>Headers Sent Second time</th><th>Total Sent second time</th><th>File Size</th><th>Percent of file sent</th></tr></thead><tbody>
- <tr><td>Haskell</td><td>1</td><td>512</td><td>256</td><td>120</td><td>&nbsp;</td><td>1</td><td>&nbsp;</td><td>17</td><td>341</td><td>3357</td><td>10.15787906</td></tr>
- <tr><td>Haskell</td><td>1</td><td>1024</td><td>512</td><td>120</td><td>&nbsp;</td><td>1</td><td>&nbsp;</td><td>9</td><td>237</td><td>3357</td><td>7.059874888</td></tr>
- <tr><td>Haskell</td><td>2</td><td>2048</td><td>1024</td><td>3357</td><td>&nbsp;</td><td>1</td><td>&nbsp;</td><td>3</td><td>3396</td><td>3357</td><td>101.1617516</td></tr>
- <tr><td>HTML</td><td>5</td><td>512</td><td>256</td><td>2050</td><td>&nbsp;</td><td>-3573</td><td>&nbsp;</td><td>94</td><td>3272</td><td>37088</td><td>8.822260569</td></tr>
- <tr><td>HTML</td><td>3</td><td>1024</td><td>512</td><td>2562</td><td>&nbsp;</td><td>-3573</td><td>&nbsp;</td><td>51</td><td>3225</td><td>37088</td><td>8.695534944</td></tr>
- <tr><td>HTML</td><td>2</td><td>2048</td><td>1024</td><td>3198</td><td>&nbsp;</td><td>-3573</td><td>&nbsp;</td><td>26</td><td>3536</td><td>37088</td><td>9.534081104</td></tr>
- <tr><td>C</td><td>23</td><td>512</td><td>256</td><td>6649</td><td>&nbsp;</td><td>-316</td><td>&nbsp;</td><td>45</td><td>7234</td><td>11000</td><td>65.76363636</td></tr>
- <tr><td>C</td><td>16</td><td>1024</td><td>512</td><td>8486</td><td>&nbsp;</td><td>-316</td><td>&nbsp;</td><td>27</td><td>8837</td><td>11000</td><td>80.33636364</td></tr>
- <tr><td>C</td><td>8</td><td>2048</td><td>1024</td><td>11296</td><td>&nbsp;</td><td>-316</td><td>&nbsp;</td><td>11</td><td>11439</td><td>11000</td><td>103.9909091</td></tr>
- <tr><td>C</td><td>31</td><td>256</td><td>128</td><td>5791</td><td>&nbsp;</td><td>-316</td><td>&nbsp;</td><td>74</td><td>6753</td><td>11000</td><td>61.39090909</td></tr>
+<thead><tr class="tableizer-firstrow"><th>File Pair</th><th>Number of resent blocks</th><th>Max Block size</th><th>Max expected size</th><th>Resent size (without header)</th><th>Change in file size (bytes)</th><th>Headers Sent Second time</th><th>Total Sent second time</th><th>File Size</th><th>% of file sent</th></tr></thead><tbody>
+ <tr><td>Haskell</td><td>1</td><td>64</td><td>32</td><td>59</td><td>1</td><td>159</td><td>2126</td><td>3357</td><td>63.33035448</td></tr>
+ <tr><td>Haskell</td><td>1</td><td>256</td><td>128</td><td>120</td><td>1</td><td>30</td><td>510</td><td>3357</td><td>15.19213584</td></tr>
+ <tr><td>Haskell</td><td>1</td><td>512</td><td>256</td><td>120</td><td>1</td><td>17</td><td>341</td><td>3357</td><td>10.15787906</td></tr>
+ <tr><td>Haskell</td><td>1</td><td>1024</td><td>512</td><td>120</td><td>1</td><td>9</td><td>237</td><td>3357</td><td>7.059874888</td></tr>
+ <tr><td>Haskell</td><td>2</td><td>2048</td><td>1024</td><td>3357</td><td>1</td><td>3</td><td>3396</td><td>3357</td><td>101.1617516</td></tr>
+ <tr><td>HTML</td><td>2</td><td>256</td><td>128</td><td>286</td><td>-3573</td><td>189</td><td>2743</td><td>3357</td><td>81.70985999</td></tr>
+ <tr><td>HTML</td><td>5</td><td>512</td><td>256</td><td>2050</td><td>-3573</td><td>94</td><td>3272</td><td>3357</td><td>97.46797736</td></tr>
+ <tr><td>HTML</td><td>3</td><td>1024</td><td>512</td><td>2562</td><td>-3573</td><td>51</td><td>3225</td><td>37088</td><td>8.695534944</td></tr>
+ <tr><td>HTML</td><td>2</td><td>2048</td><td>1024</td><td>3198</td><td>-3573</td><td>26</td><td>3536</td><td>37088</td><td>9.534081104</td></tr>
+ <tr><td>C</td><td>23</td><td>512</td><td>256</td><td>6649</td><td>-316</td><td>45</td><td>7234</td><td>11000</td><td>65.76363636</td></tr>
+ <tr><td>C</td><td>16</td><td>1024</td><td>512</td><td>8486</td><td>-316</td><td>27</td><td>8837</td><td>11000</td><td>80.33636364</td></tr>
+ <tr><td>C</td><td>8</td><td>2048</td><td>1024</td><td>11296</td><td>-316</td><td>11</td><td>11439</td><td>11000</td><td>103.9909091</td></tr>
+ <tr><td>C</td><td>31</td><td>256</td><td>128</td><td>5791</td><td>-316</td><td>74</td><td>6753</td><td>11000</td><td>61.39090909</td></tr>
 </tbody></table>
 						
 						</div>
