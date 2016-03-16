@@ -38,9 +38,14 @@
 							
 							<p>Flying Squid's Rabin Fingerprinting library provides a clean file transfer abstraction to the user, hiding the intricacies of a partial file transfer abstraction.</p>
 							<ul>
-								<li>Server-side files are split into blocks of maximum size 1 KB using a djb-2 based uniform random function of the form f: byte * byte x byte --> {0, 1, ..., 1023}. Block boundaries are determined when f returns 0.</li>
-								<li> These blocks are treated as first-class objects and are locally cached. A custom protocol based on the Value Based Web Caching paper is then implemented to transfer files based on deltas in the blocks. Any changed block is transmitted in its entirety, while only the digests of old blocks are transmitted. Blocks of size 0 denote EOF.</li>
-								<li> The client side library receives blocks and re-assembles them into files, using the inverse of the above approach. </li>
+								<li>Server-side files are split into blocks of maximum size 1 KB using a djb-2 based uniform random function of the form
+								
+								<pre><code>f: byte * byte x byte --> {0, 1, ..., 1023}</code> </pre> Block boundaries are determined when this function returns 0.</li>
+								
+								<li> Blocks are treated as first-class objects and are stored locally. A custom protocol based on the Value Based Web Caching paper is then transfers files based on changes at the block level.
+ 								     Any changed block is transmitted in its entirety, while only the identifiers of old blocks are transmitted.
+									 Blocks of size 0 are used to denote EOF.</li>
+								<li> The client receives blocks and re-assembles them into files, using identifiers. This leverages the ordering properties of TCP.</li>
 							</ul>
 						</div>
 					</section>
